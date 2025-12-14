@@ -1,4 +1,4 @@
-Qus - explain me one things let's say we have pod which stores data in the pv, and we have connected this pv through pvc , if let's say our pod got crashes then ?
+Qus - explain me one things let's say we have mysql pod which stores data in the pv, and we have connected this pv through pvc , if let's say our pod got crashes then ?
 
 Excellent question 👍
 This is exactly the right way to think about Pods + PVC + PV.
@@ -94,3 +94,18 @@ New Pod created
 Same PV mounted
    ↓
 Data is safe
+
+
+MySQL Pod ──────> PVC ──────> PV ──────> Disk 
+
+What does “PVC is still Bound” mean?
+
+When we say:
+
+PVC is still Bound
+
+it means:
+
+✅ The PVC is still successfully connected to a PV
+✅ The storage is reserved and locked for that PVC
+✅ The data is still present and safe
