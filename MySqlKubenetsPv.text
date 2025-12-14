@@ -1,0 +1,96 @@
+Qus - explain me one things let's say we have pod which stores data in the pv, and we have connected this pv through pvc , if let's say our pod got crashes then ?
+
+Excellent question 👍
+This is exactly the right way to think about Pods + PVC + PV.
+Let’s walk through it step by step, very calmly.
+
+Short answer first
+
+If a Pod crashes or is deleted, the data stored in the Persistent Volume (PV) is NOT lost, as long as:
+
+The PV is not deleted
+
+The reclaim policy is not Delete
+
+Now let’s explain it properly
+1️⃣ What happens when a Pod crashes?
+Important Kubernetes rule
+
+Pods are ephemeral (temporary)
+
+So if a Pod:
+
+Crashes
+
+Is killed
+
+Is recreated by a Deployment
+
+👉 The Pod object is destroyed
+👉 A new Pod is created with a new name
+
+2️⃣ What happens to the PVC?
+
+👉 Nothing happens
+
+PVC is a separate Kubernetes object
+
+PVC is NOT tied to Pod lifecycle
+
+PVC stays in Bound state
+
+kubectl get pvc
+
+
+PVC is still there.
+
+3️⃣ What happens to the PV?
+
+👉 Nothing happens
+
+PV is also independent
+
+Data is stored on:
+
+Disk
+
+NFS
+
+Cloud storage (EBS, PD, etc.)
+
+Data remains intact.
+
+4️⃣ What happens when new Pod is created?
+
+When Kubernetes recreates the Pod:
+
+The Pod spec still has:
+
+volumes:
+  - name: data
+    persistentVolumeClaim:
+      claimName: my-pvc
+
+
+Kubernetes:
+
+Attaches the same PV
+
+Mounts it to the container path
+
+👉 New Pod sees old data
+
+5️⃣ Simple lifecycle flow (remember this)
+Pod crashes
+   ↓
+Pod deleted
+   ↓
+PVC still bound
+   ↓
+PV still exists
+   ↓
+New Pod created
+   ↓
+Same PV mounted
+   ↓
+Data is safe
