@@ -1,0 +1,77 @@
+1️⃣ Docker + Kubernetes (Docker Desktop)
+What you think
+
+Docker runs containers
+
+Kubernetes runs on top of Docker
+
+What actually happens
+Host OS
+   ↓
+Linux kernel (host OR Docker VM)
+   ↓
+Docker Engine
+   ↓
+Kubernetes (single-node)
+   ↓
+Containers
+
+Key point
+
+Kubernetes uses Docker’s container runtime
+
+No extra tool
+
+Kubernetes is embedded inside Docker Desktop
+
+👉 Simple, beginner-friendly
+
+2️⃣ Minikube
+What Minikube does
+
+Creates its own Linux environment
+
+Runs Kubernetes inside it
+
+Host OS
+   ↓
+Linux (VM created by Minikube)
+   ↓
+Container Runtime (Docker / containerd)
+   ↓
+Kubernetes
+   ↓
+Containers
+
+Key point
+
+Minikube is Kubernetes-first
+
+Docker is just a runtime inside it
+
+Closer to real clusters
+
+3️⃣ Kind (Kubernetes IN Docker)
+What Kind does
+
+Uses Docker itself
+
+Creates Kubernetes nodes as containers
+
+Host OS
+   ↓
+Linux kernel (host or Docker VM)
+   ↓
+Docker Engine
+   ↓
+Docker containers (K8s nodes)
+   ↓
+Pods (containers inside containers)
+
+Key point
+
+No new VM
+
+Uses Docker directly
+
+Very fast & CI-friendly
